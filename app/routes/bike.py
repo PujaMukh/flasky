@@ -17,6 +17,9 @@ from app.models.bike import Bike
 
 bike_bp= Blueprint("bike_bp", __name__, url_prefix = "/bike")
 def get_one_bike_or_abort(bike_id):
+    # get one bike or abort is a helper func and we dont want user to directly access it.
+    # so no decorator
+    # commit is needed to make some changes to the database (sb.session.commit)
     try:
         bike_id = int(bike_id)
     except ValueError:
@@ -48,9 +51,14 @@ def add_bike():
 
 @bike_bp.route("", methods =["GET"])
 def get_all_bikes():
-
+    name_param = request.args.get("name")
+    if name_param is None:
     #getting all bikes list instead of hardcoding like above
-    bikes = Bike.query.all() #added this for models
+        bikes = Bike.query.all() #added this for models
+    else:
+        bikes = Bike.query.filter_by(name=name_param)
+        
+
 
     response = []
     for bike in bikes:
