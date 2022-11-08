@@ -163,7 +163,7 @@ def update_bike_with_new_vals(bike_id):
 
     if "name" not in request_body or \
         "price" not in request_body:
-            return jsonify({"message":"Request must include name, price"}), 400
+            return jsonify({"message":"Request must include name, size, price, and type"}), 400
 
     chosen_bike.name = request_body["name"]
     
@@ -184,4 +184,3 @@ def delete_one_bike(bike_id):
     db.session.commit()
 
     return jsonify({"message": f"Successfully deleted bike with id `{bike_id}`"}), 200
-

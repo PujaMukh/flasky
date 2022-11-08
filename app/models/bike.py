@@ -4,14 +4,14 @@ class Bike(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)
     price = db.Column(db.Integer)
-    
+    cyclist_id = db.Column(db.Integer, db.ForeignKey('cyclist.id'))
+    cyclist = db.relationship("Cyclist", back_populates="bikes")
 
     def to_dict(self):
         bike_dict = {
             "id": self.id,
             "name": self.name,
-            "price": self.price,
-            
+            "price": self.price
         }
         return bike_dict
 
